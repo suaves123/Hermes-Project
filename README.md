@@ -1,3 +1,4 @@
+![HERMES dashboard and AI assistant](./Hermes_Recorrido_20s.gif)
 HERMES — Crew Health Monitoring for Space Missions
 HERMES is a browser-based prototype for monitoring crew health and spacecraft cabin conditions during long-duration missions. It combines 26 simulated measurements, mission-wide alerts, personal well-being and vision check-ins, and an on-demand AI assistant. A crew member can start with the mission overview, identify who is affected, inspect the readings behind an alert, and decide what to verify next.
 
