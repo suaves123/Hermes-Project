@@ -1,0 +1,18 @@
+'use strict';
+const assert=require('node:assert/strict');
+const S=require('../web/stats.js');
+const s=S.summary([1,2,3,4,null,undefined,NaN,Infinity,'7']);
+assert.equal(s.n,4);assert.equal(s.mean,2.5);assert.ok(Math.abs(s.sd-Math.sqrt(5/3))<1e-12);
+assert.equal(S.summary([]).mean,null);assert.equal(S.summary([5]).sd,null);
+assert.equal(S.distribution([]).reason,'empty');assert.equal(S.distribution([5]).reason,'single');assert.equal(S.distribution([5,5]).reason,'constant');
+const d=S.distribution(Array.from({length:1000},(_,i)=>Math.sin(i)*4+40));
+assert.equal(d.stats.n,1000);assert.equal(d.bins.reduce((n,b)=>n+b.count,0),1000);
+assert.ok(Math.abs(d.bins.reduce((n,b)=>n+b.density*b.width,0)-1)<1e-12);
+assert.ok(d.curve.every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y)));
+assert.equal(S.timestamp('2026-11-14 12:00:00'),Date.parse('2026-11-14T12:00:00Z'));
+assert.equal(S.timestamp('2026-11-14T05:00:00-07:00'),Date.parse('2026-11-14T12:00:00Z'));
+assert.equal(S.rows([{id:1,recorded_at:'2026-01-01 00:00:00',heart_rate:50},{id:1,recorded_at:'2026-01-01 00:00:00',heart_rate:75}])[0].heart_rate,75);
+assert.equal(S.csvCell('=1+2'),'"\'=1+2"');assert.equal(S.csvCell('a,"b"'),'"a,""b"""');assert.equal(S.csvCell(-2),'"-2"');
+const points=Array.from({length:5000},(_,i)=>({x:i,y:i===2499?999:i===3500?-999:0})),reduced=S.downsample(points);
+assert.ok(reduced.length<=500);assert.ok(reduced.some(p=>p.y===999)&&reduced.some(p=>p.y===-999));assert.equal(reduced[0].x,0);assert.equal(reduced.at(-1).x,4999);
+console.log('Statistics checks passed.');

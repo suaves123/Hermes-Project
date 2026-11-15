@@ -1,0 +1,31 @@
+HERMES | WINDOWS HOST SETUP
+
+1. Extract the full ZIP to a folder in your user profile, such as Documents.
+2. Open the hermes folder and double-click INSTALL_AND_START.bat.
+3. Choose how to run HERMES.
+
+   1. Run locally with AI. Checks PHP and Ollama, installs any missing
+      components, and downloads the llama3.2 model if needed. Opens
+      http://localhost:8090.
+   2. Publish with Tailscale Funnel and AI. Also checks Tailscale and installs
+      it if needed. If this PC has not joined your Tailscale network, open
+      Tailscale and sign in. If Funnel requests permission to publish, open
+      the link shown in the console and authorize it. Choose option 2 again
+      if the command exits before showing the public URL.
+   3. Run locally with AI and the Python API. Also checks for Python 3.10
+      or later, installs Python 3.12 if needed, and sets up the API
+      dependencies in a .venv folder inside HERMES.
+
+Initial setup requires internet access to download any missing components.
+WinGet is included with Microsoft's App Installer. If the installer reports
+that WinGet is missing, install or update App Installer from the Microsoft
+Store and run the installer again. Windows may ask for permission to install
+some components. Allow time and disk space for Ollama to download the model.
+
+You can run INSTALL_AND_START.bat again to launch HERMES. It uses the
+components and model already installed. If PHP is already available and you
+only need to start the dashboard, you can also use START.bat. Ollama runs on
+the host PC. Visitors use their web browsers.
+
+When updating HERMES, keep your storage folder if it contains readings or
+check-ins. If you use API mode, keep your database file as well.
